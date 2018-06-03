@@ -1,0 +1,15 @@
+{
+    "name": "php-helper/validator",
+    "authors": [
+        {
+            "name": "Oleg G.",
+            "email": "OlegGin@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "PhpHelper\\Validator\\": "src"
+        }
+    }
+}
