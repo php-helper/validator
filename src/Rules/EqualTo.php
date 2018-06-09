@@ -8,14 +8,18 @@
 
 namespace PhpHelper\Validator\Rules;
 
+use PhpHelper\Validator\BaseRule;
+use PhpHelper\Validator\RuleInterface;
+
 class EqualTo extends BaseRule implements RuleInterface
 {
     protected $errorMessage = '%s must equal to %s.';
 
     private $equalTo;
 
-    public function __construct(string $equalTo)
+    public function __construct(string $equalTo, string $errorMessage = '')
     {
+        parent::__construct($errorMessage);
         $this->equalTo = $equalTo;
     }
 

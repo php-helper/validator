@@ -8,6 +8,9 @@
 
 namespace PhpHelper\Validator\Rules;
 
+use PhpHelper\Validator\BaseRule;
+use PhpHelper\Validator\RuleInterface;
+
 class Email extends BaseRule implements RuleInterface
 {
     protected $errorMessage = '%s is not email.';

@@ -8,7 +8,7 @@
 
 namespace PhpHelper\Validator;
 
-use PhpHelper\Validator\Rules\BaseRule;
+use PhpHelper\Validator\Rules\Between;
 use PhpHelper\Validator\Rules\Email;
 use PhpHelper\Validator\Rules\EqualTo;
 use PhpHelper\Validator\Rules\Min;
@@ -42,49 +42,57 @@ class Rules
         $this->rules[$name][] = $rule;
     }
 
-    public function required()
+    public function required(string $errorMessage = '')
     {
-        $ruleObject = new Required();
+        $ruleObject = new Required($errorMessage);
         $this->storeRule($this->name, $ruleObject);
 
         return $this;
     }
 
-    public function notEmpty()
+    public function notEmpty(string $errorMessage = '')
     {
-        $ruleObject = new NotEmpty();
+        $ruleObject = new NotEmpty($errorMessage);
         $this->storeRule($this->name, $ruleObject);
 
         return $this;
     }
 
-    public function min(int $minValue)
+    public function min(int $minValue, string $errorMessage = '')
     {
-        $ruleObject = new Min($minValue);
+        $ruleObject = new Min($minValue, $errorMessage);
         $this->storeRule($this->name, $ruleObject);
 
         return $this;
     }
 
-    public function minLength(int $minLength)
+    public function minLength(int $minLength, string $errorMessage = '')
     {
-        $ruleObject = new MinLength($minLength);
+        $ruleObject = new MinLength($minLength, $errorMessage);
         $this->storeRule($this->name, $ruleObject);
 
         return $this;
     }
 
-    public function email()
+    public function email(string $errorMessage = '')
     {
-        $ruleObject = new Email();
+        $ruleObject = new Email($errorMessage);
         $this->storeRule($this->name, $ruleObject);
 
         return $this;
     }
 
-    public function equalTo(string $name)
+    public function equalTo(string $name, string $errorMessage = '')
     {
-        $ruleObject = new EqualTo($name);
+        $ruleObject = new EqualTo($name, $errorMessage);
+        $this->storeRule($this->name, $ruleObject);
+
+        return $this;
+    }
+
+    public function between(int $minValue, int $maxValue, string $errorMessage = '')
+    {
+        $ruleObject = new Between($minValue, $maxValue, $errorMessage);
         $this->storeRule($this->name, $ruleObject);
 
         return $this;

@@ -8,7 +8,6 @@
 namespace PhpHelper\Validator;
 
 use PhpHelper\Validator\Exceptions\ValidationException;
-use PhpHelper\Validator\Rules\RuleInterface;
 
 class Validator
 {

@@ -6,7 +6,7 @@
  * Time: 13:27
  */
 
-namespace PhpHelper\Validator\Rules;
+namespace PhpHelper\Validator;
 
 interface RuleInterface
 {

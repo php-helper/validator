@@ -6,12 +6,19 @@
  * Time: 13:29
  */
 
-namespace PhpHelper\Validator\Rules;
+namespace PhpHelper\Validator;
 
 abstract class BaseRule
 {
     protected $errorMessage = '%s value must be grater than %s.';
     protected $isValid = null;
+
+    public function __construct(string $errorMessage = '')
+    {
+        if (!empty($errorMessage)) {
+            $this->errorMessage = $errorMessage;
+        }
+    }
 
     public function isValid(): bool
     {

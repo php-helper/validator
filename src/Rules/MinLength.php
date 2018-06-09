@@ -8,14 +8,18 @@
 
 namespace PhpHelper\Validator\Rules;
 
+use PhpHelper\Validator\BaseRule;
+use PhpHelper\Validator\RuleInterface;
+
 class MinLength extends BaseRule implements RuleInterface
 {
     protected $errorMessage = '%s length must be more than %s symbols.';
 
     private $minLength;
 
-    public function __construct(int $minLength)
+    public function __construct(int $minLength, string $errorMessage = '')
     {
+        parent::__construct($errorMessage);
         $this->minLength = $minLength;
     }
 
