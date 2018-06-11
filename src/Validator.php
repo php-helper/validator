@@ -11,19 +11,25 @@ use PhpHelper\Validator\Exceptions\ValidationException;
 
 class Validator
 {
-    private $rules;
+    private $rulesInstance;
+    private $rules = [];
     private $errors = [];
 
     public function __construct()
     {
-        $this->rules = new Rules();
+        $this->rulesInstance = new Rules($this);
     }
 
     public function addRule(string $name): Rules
     {
-        $this->rules->addRule($name);
+        $this->rulesInstance->addRule($name);
         
-        return $this->rules;
+        return $this->rulesInstance;
+    }
+
+    public function storeRule(string $name, BaseRule $rule)
+    {
+        $this->rules[$name][] = $rule;
     }
 
     /**
@@ -33,7 +39,7 @@ class Validator
     public function validate(array $data)
     {
         $this->errors = [];
-        foreach ($this->rules->getRules() as $name => $rules) {
+        foreach ($this->rules as $name => $rules) {
             foreach ($rules as $rule) {
                 /** @var RuleInterface $rule */
                 $isValid = $rule->validate($name, $data);

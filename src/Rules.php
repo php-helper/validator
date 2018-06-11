@@ -19,8 +19,13 @@ use PhpHelper\Validator\Rules\Required;
 
 class Rules
 {
+    private $validator;
     private $name;
-    private $rules = [];
+
+    public function __construct(Validator $validator)
+    {
+        $this->validator = $validator;
+    }
 
     public function addRule(string $name): Rules
     {
@@ -29,17 +34,9 @@ class Rules
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getRules(): array
-    {
-        return $this->rules;
-    }
-
     private function storeRule(string $name, BaseRule $rule)
     {
-        $this->rules[$name][] = $rule;
+        $this->validator->storeRule($name, $rule);
     }
 
     public function required(string $errorMessage = '')
