@@ -50,7 +50,7 @@ class Validator
         }
 
         if (!empty($this->errors)) {
-            throw new ValidationException($this->getErrorsAsString());
+            throw new ValidationException($this->getErrorsStrings());
         }
     }
 
@@ -59,7 +59,21 @@ class Validator
         return $this->errors;
     }
 
-    public function getErrorsAsString(string $errorLinesDelimiter = PHP_EOL): string
+    public function getErrorsMessages(): array
+    {
+        $errorMessages = [];
+        if (!empty($this->errors)) {
+            foreach ($this->errors as $fieldErrors) {
+                foreach ($fieldErrors as $fieldError) {
+                    $errorMessages[] = $fieldError;
+                }
+            }
+        }
+
+        return $errorMessages;
+    }
+
+    public function getErrorsStrings(string $errorLinesDelimiter = PHP_EOL): string
     {
         $errorMessages = '';
         if (!empty($this->errors)) {
