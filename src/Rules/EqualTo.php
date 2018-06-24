@@ -8,7 +8,6 @@
 
 namespace PhpHelper\Validator\Rules;
 
-use PhpHelper\Validator\BaseRule;
 use PhpHelper\Validator\RuleInterface;
 
 class EqualTo extends BaseRule implements RuleInterface

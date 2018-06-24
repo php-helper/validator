@@ -8,7 +8,6 @@
 
 namespace PhpHelper\Validator\Rules;
 
-use PhpHelper\Validator\BaseRule;
 use PhpHelper\Validator\RuleInterface;
 
 class Min extends BaseRule implements RuleInterface

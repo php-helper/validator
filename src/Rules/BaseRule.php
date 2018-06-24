@@ -6,7 +6,7 @@
  * Time: 13:29
  */
 
-namespace PhpHelper\Validator;
+namespace PhpHelper\Validator\Rules;
 
 abstract class BaseRule
 {

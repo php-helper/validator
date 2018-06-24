@@ -8,26 +8,33 @@
 namespace PhpHelper\Validator;
 
 use PhpHelper\Validator\Exceptions\ValidationException;
+use PhpHelper\Validator\Rules\BaseRule;
+use PhpHelper\Validator\Rules\Between;
+use PhpHelper\Validator\Rules\Email;
+use PhpHelper\Validator\Rules\EqualTo;
+use PhpHelper\Validator\Rules\Min;
+use PhpHelper\Validator\Rules\MinLength;
+use PhpHelper\Validator\Rules\NotEmpty;
+use PhpHelper\Validator\Rules\Required;
 
-class Validator
+class Validator implements ValidatorInterface
 {
-    private $rulesInstance;
-    private $rules = [];
-    private $errors = [];
+    protected $rules = [];
+    protected $errors = [];
+    protected $name;
 
-    public function __construct()
+    /**
+     * @param string $name
+     * @return Validator
+     */
+    public function addRule(string $name): ValidatorInterface
     {
-        $this->rulesInstance = new Rules($this);
+        $this->name = $name;
+
+        return $this;
     }
 
-    public function addRule(string $name): Rules
-    {
-        $this->rulesInstance->addRule($name);
-        
-        return $this->rulesInstance;
-    }
-
-    public function storeRule(string $name, BaseRule $rule)
+    public function storeRule(string $name, BaseRule $rule): void
     {
         $this->rules[$name][] = $rule;
     }
@@ -36,7 +43,7 @@ class Validator
      * @param mixed[] $data
      * @throws ValidationException
      */
-    public function validate(array $data)
+    public function validate(array $data): void
     {
         $this->errors = [];
         foreach ($this->rules as $name => $rules) {
@@ -84,5 +91,61 @@ class Validator
         }
 
         return $errorMessages;
+    }
+
+    public function required(string $errorMessage = '')
+    {
+        $ruleObject = new Required($errorMessage);
+        $this->storeRule($this->name, $ruleObject);
+
+        return $this;
+    }
+
+    public function notEmpty(string $errorMessage = '')
+    {
+        $ruleObject = new NotEmpty($errorMessage);
+        $this->storeRule($this->name, $ruleObject);
+
+        return $this;
+    }
+
+    public function min(int $minValue, string $errorMessage = '')
+    {
+        $ruleObject = new Min($minValue, $errorMessage);
+        $this->storeRule($this->name, $ruleObject);
+
+        return $this;
+    }
+
+    public function minLength(int $minLength, string $errorMessage = '')
+    {
+        $ruleObject = new MinLength($minLength, $errorMessage);
+        $this->storeRule($this->name, $ruleObject);
+
+        return $this;
+    }
+
+    public function email(string $errorMessage = '')
+    {
+        $ruleObject = new Email($errorMessage);
+        $this->storeRule($this->name, $ruleObject);
+
+        return $this;
+    }
+
+    public function equalTo(string $name, string $errorMessage = '')
+    {
+        $ruleObject = new EqualTo($name, $errorMessage);
+        $this->storeRule($this->name, $ruleObject);
+
+        return $this;
+    }
+
+    public function between(int $minValue, int $maxValue, string $errorMessage = '')
+    {
+        $ruleObject = new Between($minValue, $maxValue, $errorMessage);
+        $this->storeRule($this->name, $ruleObject);
+
+        return $this;
     }
 }
